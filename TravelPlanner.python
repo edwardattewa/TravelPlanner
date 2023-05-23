@@ -1,0 +1,21 @@
+# main.py
+from flask import Flask, render_template, request, redirect, session
+
+app = Flask(__name__)
+app.secret_key = 'your-secret-key'
+
+@app.route('/')
+def index():
+    if 'itinerary' not in session:
+        session['itinerary'] = []
+    return render_template('index.html', itinerary=session['itinerary'])
+
+@app.route('/search', methods=['POST'])
+def search():
+    destination = request.form['destination']
+    # Perform search logic here using external APIs or data sources
+    # Retrieve search results and display them to the user
+    return render_template('search_results.html', destination=destination)
+
+@app.route('/add_to_itinerary', methods=['POST'])
+def add_to_itinerary():
